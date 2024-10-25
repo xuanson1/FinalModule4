@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DonHangRepository extends JpaRepository<DonHang, Long> {
-    List<DonHang> findByNgayMuaBetween(LocalDateTime start, LocalDateTime end);
+    @Query("SELECT d FROM DonHang d WHERE d.ngayMua BETWEEN :startDate AND :endDate")
+    List<DonHang> findByDateRange(LocalDateTime startDate, LocalDateTime endDate);
 
     @Query("SELECT dh FROM DonHang dh ORDER BY (dh.soLuong * dh.sanPham.giaSp) DESC")
     List<DonHang> findTopByOrderByTongTienDesc();

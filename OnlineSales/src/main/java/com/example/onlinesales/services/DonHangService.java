@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,5 +37,8 @@ public class DonHangService {
     }
     public List<DonHang> findTopDonHangs() {
         return donHangRepository.findTopByOrderByTongTienDesc();
+    }
+    public List<DonHang> findByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return donHangRepository.findByDateRange(startDate, endDate);
     }
 }

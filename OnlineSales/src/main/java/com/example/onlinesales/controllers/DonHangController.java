@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -63,6 +64,18 @@ public class DonHangController {
         List<DonHang> donHangs = donHangService.findTopDonHangs();
         model.addAttribute("donHangs", donHangs);
         return "donhang/list";
+    }
+
+    @GetMapping("/filter")
+    public String filterDonHang(@RequestParam("startDate") String startDateStr,
+                                @RequestParam("endDate") String endDateStr,
+                                Model model) {
+        LocalDateTime startDate = LocalDateTime.parse(startDateStr + "T00:00:00");
+        LocalDateTime endDate = LocalDateTime.parse(endDateStr + "T23:59:59");
+
+        List<DonHang> donHangs = donHangService.findByDateRange(startDate, endDate);
+        model.addAttribute("donHangs", donHangs);
+        return "donhang/list"; // Trả về template hiển thị danh sách đơn hàng đã lọc
     }
 }
 
